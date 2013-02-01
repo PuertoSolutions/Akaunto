@@ -25,7 +25,7 @@
 			<div class="controls">
 				<input type="hidden" name="mes" id="mes" />
 				<input type="hidden" name="agno" id="agno" />
-				<button class="btn btn-primary" type="button" id="btn_abrir" >Abrir Mes</button>
+				<button class="btn btn-primary" id="btn_abrir" >Abrir Mes</button>
 			</div>
 		</div>
 	</fieldset>

@@ -1,0 +1,440 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "<?php\n	class Cuenta extends MongoHandler{\n\n		public function __construct(){\n			$this->conectar();\n			$this->setCollections(\"Cuentas\");\n		}\n\n		public function putIngreso($id, $usuario, $fecha, $monto, $detalle){\n			try{\n				$valores = array(\n					\"Fecha\" => $fecha,\n					\"Monto\" => intval($monto),\n					\"Detalle\" => $detalle\n				);\n				$this -> update(\n					array(\"Usuario\" => $usuario), \n					array('$addToSet' => array(\"Ingresos\" => $valores))\n				);\n				return array(\"Mensaje\" => \"Ingreso Agregado!\", \n						\"Detalle\" => \":) \", \"Tiempo\" => 2000);\n			}catch(Exception $e){\n				throw new RuntimeException(\"Error al Agregar Ingreso: $e\");\n			}\n		}\n\n		public function putEgreso($id, $usuario, $fecha, $monto, $detalle){\n			try{\n				$valores = array(\n					\"Fecha\" => $fecha,\n					\"Monto\" => intval($monto),\n					\"Detalle\" => $detalle\n				);\n				$this -> update(\n					array(\"Usuario\" => $usuario), \n					array('$addToSet' => array(\"Egresos\" => $valores))\n				);\n				return array(\"Mensaje\" => \"Egreso Agregado!\", \n						\"Detalle\" => \":) \", \"Tiempo\" => 2000);\n			}catch(Exception $e){\n				throw new RuntimeException(\"Error al Agregar Ingreso: $e\");\n			}\n		}\n\n		public function getCuenta($usuario, $mes, $agno){\n			$meses = array(\n				\"January\"=>\"Enero\", \n				\"February\"=>\"Febrero\", \n				\"March\"=>\"Marzo\",\n				\"April\"=>\"Abril\", \n				\"May\"=>\"Mayo\", \n				\"June\"=>\"Junio\", \n				\"July\"=>\"Julio\", \n				\"August\"=>\"Agosto\", \n				\"September\"=>\"Septiembre\", \n				\"October\"=>\"October\",\n				\"November\"=>\"Noviembre\", \n				\"December\"=>\"Diciembre\", \n			);\n			return $this->getOne(\n				array(\n					\"Usuario\" => $usuario,\n					\"Mes\" => $meses[$mes],\n					\"Agno\" => intval($agno)\n				)\n			);\n		}\n\n		public function putCuenta($usuario, $mes, $agno, $monto){\n			try {\n				$existe = $this->getOne(array(\"Usuario\" => $usuario,\"Mes\" => $mes,\"Agno\" => $agno));\n				if (empty($existe)) {\n					$this->insert(\n						array(\n							\"Usuario\" => $usuario, \n							\"Mes\" => $mes,\n							\"Agno\" => intval($agno),\n							\"Monto\" => intval($monto),\n							\"Ingresos\" => array(),\n							\"Egresos\" => array()\n						)\n					);\n					$this -> col -> ensureIndex(array(\"Usuario\" => 1));\n					return array(\"Mensaje\" => \"Mes Abierto!\", \n						\"Detalle\" => \"Ahora puedes agregar detalles de ingresos o salidas al mes :) \", \"Tiempo\" => 2000);\n				}else{\n					return array(\"Mensaje\" => \"Mes Abierto!\", \n						\"Detalle\" => \"El Mes ya se encuentra Abierto. \", \"Tiempo\" => 3000);\n				}\n			} catch (Exception $e) {\n				throw new RuntimeException(\"Error al Abrir Mes: $e\");\n			}\n		}\n	}\n?>",
+			"file": "php/Modelos/Cuenta.php",
+			"file_size": 2625,
+			"file_write_time": 130042048847536497,
+			"settings":
+			{
+				"buffer_size": 2531,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "php/assets/js/cuenta.js",
+			"settings":
+			{
+				"buffer_size": 464,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php\n	if (isset($_SESSION[\"Usuario\"])) {\n?>\n<link rel=\"stylesheet\" href=\"/assets/css/datepicker.css\">\n<script type=\"text/javascript\" src=\"/assets/js/bootstrap-datepicker.js\"></script>\n<script type=\"text/javascript\" src=\"/assets/js/historial.js\"></script>\n<div class=\"row-fluid\">\n	<div class=\"span6\">\n		<h2>A&ntilde;os</h2>\n		\n	</div>\n	<div class=\"span6\">\n		<h2>Escoger Periodo</h2>\n			<div class=\"input-append date\" id=\"periodo\" \n		  		data-date=\"<?php echo date(\"m\").\"/\".date(\"Y\");?>\" \n		  		data-date-format=\"mm/yyyy\" data-date-viewmode=\"years\" \n		  		data-date-minviewmode=\"months\">\n				<input class=\"span2\" size=\"16\" type=\"text\" \n					value=\"<?php echo date(\"m\").\"/\".date(\"Y\");?>\" readonly>\n			<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>\n		  </div>\n	</div>\n</div>\n<?php\n	}else{\n?>\n<div class=\"alert alert-error\">\n	<strong>Atenci&oacute;</strong>\n	Debes iniciar sesión para ver el contenido :(\n</div>\n<?php\n	}\n?>",
+			"file": "php/Vistas/Historial.php",
+			"file_size": 959,
+			"file_write_time": 130042049526021186,
+			"settings":
+			{
+				"buffer_size": 930,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "php/assets/js/historial.js",
+			"settings":
+			{
+				"buffer_size": 60,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "php/index.php",
+			"settings":
+			{
+				"buffer_size": 2759,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "php/Vistas/Cuenta.php",
+			"settings":
+			{
+				"buffer_size": 4357,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "php/Vistas/avisos.php",
+			"settings":
+			{
+				"buffer_size": 194,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 201.0,
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: int",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control:de",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 386.0
+	},
+	"console":
+	{
+		"height": 146.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Mario/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Mario/AppData/Roaming/Sublime Text 2/Packages/User/Package Control.sublime-settings",
+		"/C/Users/Mario/Akaunto/php/Vistas/Cuenta.php",
+		"/C/Users/Mario/Akaunto/php/Vistas/default.php",
+		"/C/Users/Mario/Akaunto/php/assets/js/bootstrap-datepicker.js",
+		"/C/Users/Marito/Akaunto/php/lib/MongoHandler.php",
+		"/C/Users/Marito/TaxiOnline/php/assets/js/pedidoCompleto.js",
+		"/C/Users/Marito/Akaunto/php/Vistas/index.php",
+		"/C/Users/Marito/Akaunto/php/Vistas/RegistroUsuario.php",
+		"/C/Users/Marito/Akaunto/php/Vistas/default.php",
+		"/C/Users/Marito/TaxiOnline/php/vistas/default.php",
+		"/C/Users/Marito/Desktop/test.html",
+		"/C/Users/Marito/Documents/Visual Studio 2012/Projects/Consulado/Consulado/App.xaml",
+		"/C/wamp/alias/TaxiOnline.conf"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			".",
+			"-",
+			"January"
+		],
+		"highlight": true,
+		"in_selection": true,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			",",
+			"=>"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "php/Modelos/Cuenta.php",
+					"settings":
+					{
+						"buffer_size": 2531,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1671,
+								1671
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "php/assets/js/cuenta.js",
+					"settings":
+					{
+						"buffer_size": 464,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								464,
+								453
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "php/Vistas/Historial.php",
+					"settings":
+					{
+						"buffer_size": 930,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								326,
+								326
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"zen_abbrev_cache":
+							[
+								"div.span6",
+								"<div class=\"span6\">${1001:$SELECTION}</div>"
+							]
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "php/assets/js/historial.js",
+					"settings":
+					{
+						"buffer_size": 60,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								48,
+								48
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "php/index.php",
+					"settings":
+					{
+						"buffer_size": 2759,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								955,
+								955
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 594.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "php/Vistas/Cuenta.php",
+					"settings":
+					{
+						"buffer_size": 4357,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								399,
+								379
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "php/Vistas/avisos.php",
+					"settings":
+					{
+						"buffer_size": 194,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 227.0,
+	"status_bar_visible": true
+}

@@ -26,7 +26,7 @@
 		$app -> render("index.php");
 	});
 
-	$app -> get('/phpinfo()', function() use ($app){
+	$app -> get('/phpinfo', function() use ($app){
 		phpinfo();
 	});
 
@@ -37,6 +37,31 @@
 	$app -> get('/LogOut', function() use ($app){
 		session_destroy();
 		$app->render("avisos.php", array("Mensaje" => "", "Detalle" => "", "Tiempo" => 10));
+	});
+
+	$app -> get('/Historial/', function() use ($app){
+		require("Modelos/Cuenta.php");
+		$agnos = new Cuenta();
+		$app->render("Historial.php", array("Agnos" => $agnos -> getAgnos($_SESSION["Usuario"])));
+	});
+
+	$app -> get('/Historial/:agno/', function($agno) use ($app){
+		require("Modelos/Cuenta.php");
+		$agnos = new Cuenta();
+		$app->render("Historial.php", array(
+			"Agnos" => $agnos -> getAgnos($_SESSION["Usuario"]),
+			"Meses" => $agnos -> getMeses($_SESSION["Usuario"], $agno))
+		);
+	});
+
+	$app -> get('/Historial/:agno/:mes', function($agno, $mes) use ($app){
+		require "Modelos/Cuenta.php";
+		$agnos = new Cuenta();
+		$app->render("Historial.php", array(
+			"Agnos" => $agnos -> getAgnos($_SESSION["Usuario"]),
+			"Meses" => $agnos -> getMeses($_SESSION["Usuario"], $agno),
+			"Cuenta" => $agnos -> getCuenta($_SESSION["Usuario"], $mes, $agno, true))
+		);
 	});
 
 	//------------------------------------------------------------------------POSTs
@@ -51,7 +76,7 @@
 	});
 
 	$app -> post('/Login', function() use ($app){
-		require 'modelos/Usuario.php';
+		require 'Modelos/Usuario.php';
 		$usuario = new Usuario(
 			null, 
 			$app->request()->params("mail"), 
@@ -61,7 +86,7 @@
 	});
 
 	$app -> post('/Cuenta/Nueva', function() use ($app){
-		require 'modelos/Cuenta.php';
+		require 'Modelos/Cuenta.php';
 		$cuenta = new Cuenta();
 		$app->render("avisos.php", $cuenta -> putCuenta(
 			$_SESSION["Usuario"],
@@ -72,7 +97,7 @@
 	});
 
 	$app -> post('/Cuenta/Ingreso', function() use ($app){
-		require 'modelos/Cuenta.php';
+		require 'Modelos/Cuenta.php';
 		$cuenta = new Cuenta();
 		$app->render("avisos.php", $cuenta -> putIngreso(
 			new MongoID($app -> request() ->params("id")),
@@ -84,7 +109,7 @@
 	});
 
 	$app -> post('/Cuenta/Egreso', function() use ($app){
-		require 'modelos/Cuenta.php';
+		require 'Modelos/Cuenta.php';
 		$cuenta = new Cuenta();
 		$app->render("avisos.php", $cuenta -> putEgreso(
 			new MongoID($app -> request() ->params("id")),

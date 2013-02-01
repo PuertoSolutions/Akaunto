@@ -355,7 +355,7 @@
 				navStep: 10
 		}],
 		dates:{
-			days: ["Domingo", "Lunes", "Martes", "MiÃ©rcoles", "Jueves", "Viernes", "SÃ¡bado", "Domingo"],
+			days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "SÃ¡bado", "Domingo"],
 			daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
 			daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
 			months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],

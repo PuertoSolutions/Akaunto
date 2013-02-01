@@ -28,7 +28,7 @@
 		 				<ul class="nav">
 		 					<?php 
 		 						if(isset($_SESSION["Usuario"])){ ?>
-		 							<li><a href="#">algo</a></li>
+		 							<li><a href="/Historial/">Historial</a></li>
 		 						<?php }
 		 					?>
 	 					</ul>

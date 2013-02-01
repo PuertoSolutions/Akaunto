@@ -27,7 +27,7 @@
 			"file": "Modelos/Cuenta.php",
 			"settings":
 			{
-				"buffer_size": 2226,
+				"buffer_size": 2244,
 				"line_ending": "Windows",
 				"name": "<?php"
 			}
@@ -125,7 +125,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -140,8 +140,8 @@
 						"selection":
 						[
 							[
-								814,
-								814
+								26,
+								26
 							]
 						],
 						"settings":
@@ -150,7 +150,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 168.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -173,7 +173,8 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -186,21 +187,22 @@
 					"file": "Modelos/Cuenta.php",
 					"settings":
 					{
-						"buffer_size": 2226,
+						"buffer_size": 2244,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1703,
-								1703
+								1151,
+								1151
 							]
 						],
 						"settings":
 						{
 							"auto_name": "<?php",
-							"syntax": "Packages/PHP/PHP.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 329.0,
@@ -220,8 +222,8 @@
 						"selection":
 						[
 							[
-								444,
-								390
+								548,
+								548
 							]
 						],
 						"settings":
@@ -281,7 +283,8 @@
 						"settings":
 						{
 							"auto_name": "jQuery(function($){",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

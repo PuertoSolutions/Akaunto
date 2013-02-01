@@ -42,15 +42,83 @@
 			}
 		}
 
-		public function getCuenta($usuario, $mes, $agno){
-			$meses = array("January" => "Enero");
-			return $this->getOne(
+		public function getAgnos($usuario){
+			return $this ->get(
+				array("Usuario" => $usuario),
+				array("Agno" => 1, "_id" => 0)
+			);
+		}
+
+		public function getMeses($usuario, $agno){
+			return $this ->get(
 				array(
 					"Usuario" => $usuario,
-					"Mes" => $meses[$mes],
-					"Agno" => $agno
+					"Agno" => intval($agno)
+				),
+				array("Mes" => 1, "_id" => 0)
+			);
+		}
+
+		public function getSumaEgresos($id){
+			return $this -> col -> aggregate(
+				array('$match' => array('_id' => $id)),
+				array('$unwind' => '$Egresos'),
+				array('$group' => array(
+						"_id" => null,
+						"suma" => array(
+							'$sum' => '$Egresos.Monto'
+						)
+					)
 				)
 			);
+		}
+
+		public function getSumaIngresos($id){
+			return $this -> col -> aggregate(
+				array('$match' => array('_id' => $id)),
+				array('$unwind' => '$Ingresos'),
+				array('$group' => array(
+						"_id" => null,
+						"suma" => array(
+							'$sum' => '$Ingresos.Monto'
+						)
+					)
+				)
+			);
+		}
+
+		public function getCuenta($usuario, $mes, $agno, $check = false){
+			if (!$check) {
+				$meses = array(
+					"January"=>"Enero", 
+					"February"=>"Febrero", 
+					"March"=>"Marzo",
+					"April"=>"Abril", 
+					"May"=>"Mayo", 
+					"June"=>"Junio", 
+					"July"=>"Julio", 
+					"August"=>"Agosto", 
+					"September"=>"Septiembre", 
+					"October"=>"October",
+					"November"=>"Noviembre", 
+					"December"=>"Diciembre", 
+				);
+				return $this->getOne(
+					array(
+						"Usuario" => $usuario,
+						"Mes" => $meses[$mes],
+						"Agno" => intval($agno)
+					)
+				);
+			}else{
+				return $this->getOne(
+					array(
+						"Usuario" => $usuario,
+						"Mes" => $mes,
+						"Agno" => intval($agno)
+					)
+				);
+			}
 		}
 
 		public function putCuenta($usuario, $mes, $agno, $monto){
@@ -61,7 +129,7 @@
 						array(
 							"Usuario" => $usuario, 
 							"Mes" => $mes,
-							"Agno" => $agno,
+							"Agno" => intval($agno),
 							"Monto" => intval($monto),
 							"Ingresos" => array(),
 							"Egresos" => array()

@@ -9,7 +9,7 @@
 			$connS = "";
 			try {			
 				$connS = ($_ENV["modo"] == "p") ? 
-					"mongodb://admin:f3cnEayiIiuu@$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/Akaunto" : 
+					"mongodb://admin:f3cnEayiIiuu@".$OPENSHIFT_MONGODB_DB_HOST.":".$OPENSHIFT_MONGODB_DB_PORT/Akaunto : 
 					"mongodb://localhost:27017/Akaunto";
 				$this -> m = new Mongo($connS);
 				$this->db = $this->m->selectDB("Akaunto");
